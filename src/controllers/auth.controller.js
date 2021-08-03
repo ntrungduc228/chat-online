@@ -59,19 +59,35 @@ class AuthController {
        }
 
        try{
-        let createUserSuccess =  await auth.register(req.body.email, req.body.password, req.body.gender);
+        let createUserSuccess =  await auth.register(req.body.email, req.body.password, req.body.gender, req.protocol, req.get("host"));
 
          successArray.push(createUserSuccess);
          req.flash("success", successArray);
          return res.redirect("/signup");
        }
        catch(error){
-        errorArray.push(error);
+        errorArray.push(error); console.log(error);
         req.flash("errors", errorArray);
             return res.redirect("/signup"); 
        }
 
    }
+
+   async verifyAccount(req, res, next){
+    let errorArr = [];
+    let successArr = [];
+    try {
+      let verifySuccess = await auth.verifyAccount(req.params.token);
+      successArr.push(verifySuccess);
+  
+      req.flash("success", successArr);
+      return res.redirect("/login"); 
+    } catch (error) {
+      errorArr.push(error);
+      req.flash("errors", errorArr);
+      return res.redirect("/signup"); 
+    }
+  };
 
    getLogOut(req, res, next){
        res.redirect('/');

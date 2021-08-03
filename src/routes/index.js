@@ -16,7 +16,7 @@ function routes(app){
     app.get('/logout', authController.getLogOut);
     app.get('/forgot-password', authController.forgotPassword);
     app.get('/reset-password', authController.resetPassword);
-
+    app.get('/verify/:token', authController.verifyAccount)
     
     app.get('/login', authController.getSignUp);
     
