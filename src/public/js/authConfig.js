@@ -1,40 +1,40 @@
 /**
- * Created by https://trungquandev.com's author on 25/02/2018.
+ * Created by  author on 25/02/2018.
  */
-function showRegisterForm() {
-    $('.loginBox').fadeOut('fast', function() {
-      $('.registerBox').fadeIn('fast');
-      $('.login-footer').fadeOut('fast', function() {
-        $('.register-footer').fadeIn('fast');
-      });
-      $('.modal-title').html('Đăng ký tài khoản');
+ function showRegisterForm() {
+  $('.loginBox').fadeOut('fast', function() {
+    $('.registerBox').fadeIn('fast');
+    $('.login-footer').fadeOut('fast', function() {
+      $('.register-footer').fadeIn('fast');
     });
-    $('.error').removeClass('alert alert-danger').html('');
-  
-  }
-  
-  function showLoginForm() {
-    $('#loginModal .registerBox').fadeOut('fast', function() {
-      $('.loginBox').fadeIn('fast');
-      $('.register-footer').fadeOut('fast', function() {
-        $('.login-footer').fadeIn('fast');
-      });
-  
-      $('.modal-title').html('Đăng nhập');
+    $('.modal-title').html('Đăng ký tài khoản');
+  });
+  $('.error').removeClass('alert alert-danger').html('');
+
+}
+
+function showLoginForm() {
+  $('#loginModal .registerBox').fadeOut('fast', function() {
+    $('.loginBox').fadeIn('fast');
+    $('.register-footer').fadeOut('fast', function() {
+      $('.login-footer').fadeIn('fast');
     });
-    $('.error').removeClass('alert alert-danger').html('');
-  }
-  
-  function openLoginModal() {
+
+    $('.modal-title').html('Đăng nhập');
+  });
+  $('.error').removeClass('alert alert-danger').html('');
+}
+
+function openLoginModal() {
+  setTimeout(function() {
+    $('#loginModal').modal('show');
     showLoginForm();
-    setTimeout(function() {
-      $('#loginModal').modal('show');
-    }, 230);
-  }
-  
-  function openRegisterModal() {
+  }, 230);
+}
+
+function openRegisterModal() {
+  setTimeout(function() {
+    $('#loginModal').modal('show');
     showRegisterForm();
-    setTimeout(function() {
-      $('#loginModal').modal('show');
-    }, 230);
-  }
+  }, 230);
+}

@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user.model');
 const config = require('../config/auth.config');
+const {auth} = require('../services/');
 
 
 class AuthController {
@@ -10,6 +11,7 @@ class AuthController {
     getSignUp(req, res, next) {
         res.render('auth/master', {
             errors: req.flash("errors"),
+            success: req.flash("success")
         });
     }
 
@@ -40,8 +42,9 @@ class AuthController {
 
     }
 
-   postSignUp(req, res, next) {
+   async postSignUp(req, res, next) {
        let errorArray = [];
+       let successArray = [];
 
        let validationErrors = validationResult(req);
        if(!validationErrors.isEmpty()){
@@ -54,6 +57,20 @@ class AuthController {
             req.flash("errors", errorArray);
             return res.redirect("/signup");
        }
+
+       try{
+        let createUserSuccess =  await auth.register(req.body.email, req.body.password, req.body.gender);
+
+         successArray.push(createUserSuccess);
+         req.flash("success", successArray);
+         return res.redirect("/signup");
+       }
+       catch(error){
+        errorArray.push(error);
+        req.flash("errors", errorArray);
+            return res.redirect("/signup"); 
+       }
+
    }
 
    getLogOut(req, res, next){

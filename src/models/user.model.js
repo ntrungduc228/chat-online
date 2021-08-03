@@ -142,6 +142,16 @@ const UserSchema = new Schema({
     timestamps: true
 });
 
+UserSchema.statics = {
+    createNew(item) {
+        return this.create(item);
+    },
+
+    findByEmail(email) {
+        return this.findOne({"local.email": email}).exec();
+    },
+}
+
 const User = mongoose.model('User', UserSchema);
 
 module.exports = User;

@@ -3,7 +3,8 @@ const cors = require("cors");
 const path = require('path');
 require('dotenv').config();
 const connectFlash = require('connect-flash');
-const session = require('express-session')
+const session = require('express-session');
+const configSession = require('./config/session.config');
 
 const routes = require('./routes');
 const db = require('./config/db.config');
@@ -23,6 +24,9 @@ app.use(session({ cookie: { maxAge: 60000 },
 
 // Connect to MongoDB
 db.connect();
+
+// Config session
+configSession.config(app);
 
 // Config view engine
 app.use(express.static(path.join(__dirname, 'public')));

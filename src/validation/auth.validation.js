@@ -1,19 +1,18 @@
 const {check} = require('express-validator');
 const {transValidation} = require('../../lang/vi');
 
-const register  = [
+let register = [
     check("email", transValidation.email_incorrect)
         .isEmail()
         .trim(),
-    check("gender", transValidation.gender_incorrect)
+    check("gender",transValidation.gender_incorrect)
         .isIn(["male", "female"]),
     check("password", transValidation.password_incorrect)
         .isLength({min: 8})
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/),
-    check("password confirmation", transValidation.password_confirmation_incorrect)
-        .custom((value, {req}) => {
-            return value === req.body.password
-        })
+        .matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})"),
+        //.matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$.!%*#?&]/),
+    check("password_confirmation", transValidation.password_incorrect)
+        .custom((value, {req}) => value === req.body.password)
 ];
 
 module.exports = {
