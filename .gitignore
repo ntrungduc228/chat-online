@@ -1,0 +1,9 @@
+# Dependency directories
+node_modules/
+
+# dotenv environment variables file
+.env
+
+*.idea
+
+src/public/bower_components/
