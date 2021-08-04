@@ -5,12 +5,14 @@ const homeController = require('../controllers/home.controller');
 const passport = require('passport');
 const initPassportLocal = require('../controllers/passport/local');
 const initPassportFacebook = require('../controllers/passport/facebook');
+const initPassportGoogle = require('../controllers/passport/google');
 
 const {authValid} = require('../validation/');
 
 // Init all passport
 initPassportLocal();
 initPassportFacebook();
+initPassportGoogle();
 
 function routes(app){
     
@@ -26,8 +28,14 @@ function routes(app){
     app.post('/signup', authValid.register, authController.postSignUp);
     app.get('/verify/:token',  authController.checkLoggedOut, authController.verifyAccount)
     
-    app.get('/auth/facebook', passport.authenticate('facebook', {scope: ["email"]}));
-    app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+    app.get('/auth/facebook', authController.checkLoggedOut, passport.authenticate('facebook', {scope: ["email"]}));
+    app.get('/auth/facebook/callback', authController.checkLoggedOut, passport.authenticate('facebook', {
+        successRedirect: "/",
+        failureRedirect: "/login",
+    }));
+
+    app.get('/auth/google', authController.checkLoggedOut, passport.authenticate('google', {scope: ["email"]}));
+    app.get('/auth/google/callback', authController.checkLoggedOut, passport.authenticate('google', {
         successRedirect: "/",
         failureRedirect: "/login",
     }));
