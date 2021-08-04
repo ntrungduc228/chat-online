@@ -170,6 +170,10 @@ UserSchema.statics = {
     findUserByIdForSessionToUse(id) {
         return this.findById(id, {"local.password": 0}).exec();
     },
+
+    findByFacebookUid(uid) {
+        return this.findOne({"facebook.uid": uid}).exec();
+    },
 }
 
 UserSchema.methods = {
