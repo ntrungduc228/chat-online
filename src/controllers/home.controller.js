@@ -6,7 +6,8 @@ class HomeController{
     getHomePage(req, res, next) {
         res.render('main/components/home', {
             errors: req.flash("errors"),
-            success: req.flash("success")
+            success: req.flash("success"),
+            user: req.user,
         });
     }
 }

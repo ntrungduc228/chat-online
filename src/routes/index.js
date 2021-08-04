@@ -1,5 +1,6 @@
 const authController = require('../controllers/auth.controller');
 const homeController = require('../controllers/home.controller');
+const userController = require('../controllers/user.controller');
 
 
 const passport = require('passport');
@@ -42,6 +43,7 @@ function routes(app){
 
     app.get('/', authController.checkLoggedIn, homeController.getHomePage);
     app.get('/logout', authController.checkLoggedIn, authController.getLogOut);
+    app.put('/user/update-avatar', authController.checkLoggedIn, userController.updateAvatar);
 
 
     
