@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const bcrypt = require('bcryptjs');
 
 const roles = ["user", "admin"];
 
@@ -165,8 +166,18 @@ UserSchema.statics = {
           {"local.isActive": true, "local.verifyToken": null}
         ).exec();
     },
+
+    findUserByIdForSessionToUse(id) {
+        return this.findById(id, {"local.password": 0}).exec();
+    },
 }
 
+UserSchema.methods = {
+    comparePassword(password) {
+        // return a promise has result is true or false
+        return bcrypt.compare(password, this.local.password); 
+    }
+}
 const User = mongoose.model('User', UserSchema);
 
 module.exports = User;

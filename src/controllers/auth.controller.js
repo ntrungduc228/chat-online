@@ -1,45 +1,20 @@
 const { validationResult } = require('express-validator');
-const jwt = require('jsonwebtoken');
 
 const User = require('../models/user.model');
 const config = require('../config/auth.config');
 const {auth} = require('../services/');
 
+const {transSuccess} = require("../../lang/vi");
+
 
 class AuthController {
+
 
     getSignUp(req, res, next) {
         res.render('auth/master', {
             errors: req.flash("errors"),
             success: req.flash("success")
         });
-    }
-
-
-    async login(req, res, next) {
-        try{
-            const user = await User.findOne({
-                email: req.body.email,
-                password: req.body.password,
-            });
-    
-            if(user) {
-                res.json({
-                    message: 'dang nhap thanh cong'
-                })
-            }else {
-                res.status(404).json({
-                    message: 'user khong ton tai'
-                })
-            }
-        }
-        catch(err){
-            res.json({
-                err,
-                message: 'co loi ben server'
-            })
-        }
-
     }
 
    async postSignUp(req, res, next) {
@@ -73,6 +48,7 @@ class AuthController {
 
    }
 
+   // token is sent by mail
    async verifyAccount(req, res, next){
     let errorArr = [];
     let successArr = [];
@@ -90,16 +66,25 @@ class AuthController {
   };
 
    getLogOut(req, res, next){
-       res.redirect('/');
+       req.logout(); // Remove session passport user
+       req.flash("success", transSuccess.logout_success);
+       return res.redirect("/login");
    }
 
-    forgotPassword(req, res, next) {
-        res.render('auth/forgot-password');
+   checkLoggedIn(req, res, next){
+    if(!req.isAuthenticated()) {
+      return res.redirect("/login"); 
     }
-
-    resetPassword(req, res, next){
-        res.render('auth/reset-password');
+    next();
+  };
+  
+  checkLoggedOut(req, res, next){
+    if(req.isAuthenticated()) {
+      return res.redirect("/"); 
     }
+    next();
+  };
+   
 }
 
 module.exports = new AuthController();
