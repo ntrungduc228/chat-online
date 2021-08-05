@@ -8,7 +8,7 @@ const initPassportLocal = require('../controllers/passport/local');
 const initPassportFacebook = require('../controllers/passport/facebook');
 const initPassportGoogle = require('../controllers/passport/google');
 
-const {authValid} = require('../validation/');
+const {authValid, userValid} = require('../validation/');
 
 // Init all passport
 initPassportLocal();
@@ -44,6 +44,7 @@ function routes(app){
     app.get('/', authController.checkLoggedIn, homeController.getHomePage);
     app.get('/logout', authController.checkLoggedIn, authController.getLogOut);
     app.put('/user/update-avatar', authController.checkLoggedIn, userController.updateAvatar);
+    app.put('/user/update-info', authController.checkLoggedIn, userValid.updateInfo, userController.updateInfo);
 
 
     

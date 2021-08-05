@@ -6,10 +6,10 @@ const UserModel = require('../models/user.model');
  * @param {data update} item 
  */
 
-let updateUser = (id, item) => {
+ let updateUser = (id, item) => {
     return UserModel.updateUser(id, item);
-}
+};
 
 module.exports = {
-    updateUser, 
+    updateUser: updateUser
 };

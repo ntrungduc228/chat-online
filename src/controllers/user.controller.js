@@ -4,6 +4,7 @@ const {transErrors, transSuccess} = require("./../../lang/vi");
 const { v4: uuidv4 } = require('uuid');
 const {user} = require('../services');
 const fsExtra = require('fs-extra');
+const { validationResult } = require('express-validator');
 
 let storageAvatar = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -29,34 +30,65 @@ class UserController {
     updateAvatar(req, res, next) {
         avatarUploadFile(req, res, async (error) => {
             if(error) {
-                if(error.message) {
-                    return res.status(500).send(transErrors.avatar_size);
-                }
-                return res.status(500).send(error);
+              if (error.message) {
+                return res.status(500).send(transErrors.avatar_size);
+              } 
+              return res.status(500).send(error);
             }
             try {
-                let updateUserItem = {
-                    avatar: req.file.filename,
-                    updatedAt: Date.now()
-                };
-                // Update user
-                let userUpdate = await user.updateUser(req.user._id, updateUserItem);
-    
-                // Không xóa avatar cũ của người dùng vì còn cần để sử dụng cho bảng messages
-                await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`);
-    
-                let result = {
-                    message: transSuccess.user_info_updated,
-                    imageSrc: `/images/users/${req.file.filename}`
-                };
-                res.status(200).send(result);
+              let updateUserItem = {
+                avatar: req.file.filename,
+                updatedAt: Date.now()
+              };
+              // update
+              let userUpdate = await user.updateUser(req.user._id, updateUserItem);
+        
+              // Remove old user avatar
+              await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`);
+        
+              let result = {
+                message: transSuccess.user_info_updated,
+                imageSrc: `/images/users/${req.file.filename}`
+              }
+              return res.status(200).send(result);
             } catch (error) {
-                console.log(error);
-                res.status(500).send(error);
+              console.log(error);
+              return res.status(500).send(error);
+        
             }
-        });
+          });
 
         
+    }
+
+    async updateInfo(req, res, next) {
+
+      let errorArray = [];
+      let validationErrors = validationResult(req);
+
+       if(!validationErrors.isEmpty()){
+            let errors = Object.values(validationErrors.mapped());
+
+            errors.forEach(item => {
+                errorArray.push(item.msg);
+            });
+
+            return res.status(500).send(errorArray);
+       }
+
+      try{
+        let updateUserItem = req.body;
+        await user.updateUser(req.user._id, updateUserItem);
+
+        let result = {
+            message: transSuccess.user_info_updated,
+        };
+        res.status(200).send(result);
+      }
+      catch(error){
+        console.log(error);
+        return res.status(500).send(error);
+      }
     }
 }
 

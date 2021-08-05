@@ -90,7 +90,7 @@ const UserSchema = new Schema({
         default: "male",
     },
     phone: {
-        type: Number,
+        type: String,
         default: null
     },
     address: {

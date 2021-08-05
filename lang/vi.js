@@ -39,6 +39,7 @@ const transSuccess = {
             return `Chao xìn ${username}, chúc bạn một ngày tốt lành.`
         },
         logout_success: "Đăng xuất tài khoản thành công, hẹn gặp lại.",
+        avatar_updated: "Cập nhật ảnh đại diện thành công.",
         user_info_updated: "Cập nhật thông tin người dùng thành công.",
         user_password_updated: "Cập nhật mật khẩu thành công."
     };
