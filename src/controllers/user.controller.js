@@ -90,6 +90,36 @@ class UserController {
         return res.status(500).send(error);
       }
     }
+
+    async updatePassword(req, res, next) {
+
+      let errorArray = [];
+
+       let validationErrors = validationResult(req);
+       if(!validationErrors.isEmpty()){
+            let errors = Object.values(validationErrors.mapped());
+
+            errors.forEach(item => {
+                errorArray.push(item.msg);
+            });
+
+            return res.status(500).send(errorArray);
+       }
+
+      try{
+        let updateUserItem = req.body;
+        await user.updatePassword(req.user._id, updateUserItem);
+
+        let result = {
+          message: transSuccess.user_password_updated,
+        }
+
+        return res.status(200).send(result);
+      }
+      catch(error){
+        return res.status(500).send(error);
+      }
+    }
 }
 
 module.exports = new UserController();
