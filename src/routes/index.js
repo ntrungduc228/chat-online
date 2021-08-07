@@ -44,11 +44,15 @@ function routes(app){
 
     app.get('/', authController.checkLoggedIn, homeController.getHomePage);
     app.get('/logout', authController.checkLoggedIn, authController.getLogOut);
+
     app.put('/user/update-avatar', authController.checkLoggedIn, userController.updateAvatar);
     app.put('/user/update-info', authController.checkLoggedIn, userValid.updateInfo, userController.updateInfo);
     app.put('/user/update-password', authController.checkLoggedIn, userValid.updatePassword, userController.updatePassword);
-    app.get('/contact/find-users/:keyword', authController.checkLoggedIn, contactValid.findUsersContact, contactController.findUsersContact);
     
+    app.get('/contact/find-users/:keyword', authController.checkLoggedIn, contactValid.findUsersContact, contactController.findUsersContact);
+    app.post('/contact/add-new', authController.checkLoggedIn, contactController.addNew);
+    app.delete('/contact/remove-request-contact', authController.checkLoggedIn, contactController.removeRequestContact);
+
 }
 
 module.exports = routes;

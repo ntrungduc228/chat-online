@@ -31,6 +31,35 @@ class ContactController {
             return res.status(500).send(error);
         }
     }
+
+    async addNew(req, res, next) {
+        try{
+            let currentUserId = req.user._id;
+            let contactId = req.body.uid;
+            
+            let newContact = await contact.addNew(currentUserId, contactId);
+            return res.status(200).send({ success: !!newContact})
+           
+        }
+         catch(error) {
+             return res.status(500).send(error);
+        }
+    }
+
+    async removeRequestContact(req, res, next) {
+        try{
+            let currentUserId = req.user._id;
+            let contactId = req.body.uid;
+            
+            let removeReq = await contact.removeRequestContact(currentUserId, contactId);
+            return res.status(200).send({ success: !!removeReq})
+           
+        }
+         catch(error) {
+             return res.status(500).send(error);
+        }
+    }
+
 }
 
 module.exports = new ContactController();
