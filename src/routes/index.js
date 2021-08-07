@@ -1,6 +1,7 @@
 const authController = require('../controllers/auth.controller');
 const homeController = require('../controllers/home.controller');
 const userController = require('../controllers/user.controller');
+const contactController = require('../controllers/contact.controller');
 
 
 const passport = require('passport');
@@ -8,7 +9,7 @@ const initPassportLocal = require('../controllers/passport/local');
 const initPassportFacebook = require('../controllers/passport/facebook');
 const initPassportGoogle = require('../controllers/passport/google');
 
-const {authValid, userValid} = require('../validation/');
+const {authValid, userValid, contactValid} = require('../validation/');
 
 // Init all passport
 initPassportLocal();
@@ -46,7 +47,7 @@ function routes(app){
     app.put('/user/update-avatar', authController.checkLoggedIn, userController.updateAvatar);
     app.put('/user/update-info', authController.checkLoggedIn, userValid.updateInfo, userController.updateInfo);
     app.put('/user/update-password', authController.checkLoggedIn, userValid.updatePassword, userController.updatePassword);
-
+    app.get('/contact/find-users/:keyword', authController.checkLoggedIn, contactValid.findUsersContact, contactController.findUsersContact);
     
 }
 

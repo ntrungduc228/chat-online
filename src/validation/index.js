@@ -1,7 +1,9 @@
 const authValid = require('./auth.validation');
 const userValid = require('./user.validation');
+const contactValid = require('./contact.validation');
 
  module.exports = {
     authValid,
     userValid,
+    contactValid,
  };

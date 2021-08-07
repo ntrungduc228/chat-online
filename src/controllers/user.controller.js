@@ -2,7 +2,7 @@ const multer = require('multer');
 const app = require('../config/app.config');
 const {transErrors, transSuccess} = require("./../../lang/vi");
 const { v4: uuidv4 } = require('uuid');
-const {user} = require('../services');
+const {user, contact} = require('../services');
 const fsExtra = require('fs-extra');
 const { validationResult } = require('express-validator');
 
@@ -120,6 +120,7 @@ class UserController {
         return res.status(500).send(error);
       }
     }
+
 }
 
 module.exports = new UserController();

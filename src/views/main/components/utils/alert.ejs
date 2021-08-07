@@ -1,0 +1,16 @@
+
+<ul id="alert-message-find-users-contact" style="display: none;">
+    <% errorArray.forEach((error, index) => { %>
+        <li class="alert-message-find-users-contact-item"><%= error +'1' %></li>
+        <li class="alert-message-find-users-contact-item"><%= error +'2' %></li>
+    <% }) %>
+</ul>
+<script>
+    let errorsArray = $("#alert-message-find-users-contact");
+        errorsArray.children().each( (index, element) => {
+        console.log(element);   // children's element
+    });
+
+    
+    
+</script>
