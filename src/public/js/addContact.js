@@ -9,7 +9,8 @@ function addContact() {
                 $("#find-user").find(`div.user-remove-request-contact[data-uid = ${targetId}]`).css("display", "inline-block");
             
                 increaseNumberNotifContact("count-request-contact-sent");
-                // Handle realtime in next lesson.
+                
+                socket.emit("add-new-contact", {contactId: targetId});
             }
         })
     });

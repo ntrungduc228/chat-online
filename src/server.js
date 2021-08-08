@@ -3,15 +3,26 @@ const cors = require("cors");
 const path = require('path');
 require('dotenv').config();
 const connectFlash = require('connect-flash');
-const configSession = require('./config/session.config');
+const session = require('./config/session.config');
 const passport = require('passport');
+const http = require('http');
+const socketio = require('socket.io');
 
+const initSockets = require('./sockets/');
 const routes = require('./routes');
 const db = require('./config/db.config');
 
+const passportSocketIo = require("passport.socketio");
+const cookieParser = require('cookie-parser');
+const configSocketIo = require('./config/socketio.config');
 
+// Init app express
 
 const app = express();
+
+// Init server with socket.io & express app
+let server = http.createServer(app);
+let io = socketio(server);
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -20,8 +31,11 @@ app.use(express.json());
 // Enable flash messages
 app.use(connectFlash());
 
+// Use Cookie parser
+app.use(cookieParser());
+
 // Config session
-configSession.config(app);
+session.config(app);
 
 // Config passport js
 app.use(passport.initialize());
@@ -29,6 +43,8 @@ app.use(passport.session());
 
 // Connect to MongoDB
 db.connect();
+
+configSocketIo(io, cookieParser, session.sessionStore);
 
 
 
@@ -38,14 +54,14 @@ app.engine('ejs', require('express-ejs-extend'));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, 'views'));
 
-
-
 routes(app);
+
+initSockets(io);
 
 
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server app listening at ${PORT}`)
 });
 
