@@ -14,10 +14,19 @@ function removeRequestContact() {
                 
                     decreaseNumberNotifContact("count-request-contact-sent");
 
-                    // Handle realtime in next lesson.
+                    socket.emit("remove-request-contact", {contactId: targetId});
                 }
             },
         })
     });
 }
 
+socket.on("response-remove-request-contact", function(user)  {
+   $(".noti_content").find(`span[data-uid=${user.id}]`).remove();
+
+
+   decreaseNumberNotifContact("count-request-contact-received");
+
+   decreaseNumberNotification("noti_contact_counter");
+   decreaseNumberNotification("noti_counter");
+});
