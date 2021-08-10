@@ -15,8 +15,8 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body onload="spinLoaded()">
-    <!--Icon loader-->
-    <div id="loader"></div>
+    <!--CSS main loader-->
+    <div class="master-loader"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
     <%- include('components/alert'); %>
 
     <%- include('components/navbar'); %>
@@ -42,13 +42,17 @@
 
     <!-- My js-->
     <script src="js/mainConfig.js"></script>
-    
     <script src="js/updateUser.js"></script>
+
     <script src="js/caculateNotifContact.js"></script>
     <script src="js/caculateNotification.js"></script>
+
     <script src="js/addContact.js"></script>
     <script src="js/removeRequestContact.js"></script>
     <script src="js/findUsersContact.js"></script>
+
+    <script src="js/readMoreNotif.js"></script>
+
 
 
     <%- include("components/modals/contact")  %>

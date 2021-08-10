@@ -2,6 +2,8 @@ const authController = require('../controllers/auth.controller');
 const homeController = require('../controllers/home.controller');
 const userController = require('../controllers/user.controller');
 const contactController = require('../controllers/contact.controller');
+const notificationController = require('../controllers/notification.controller');
+
 
 
 const passport = require('passport');
@@ -52,6 +54,9 @@ function routes(app){
     app.get('/contact/find-users/:keyword', authController.checkLoggedIn, contactValid.findUsersContact, contactController.findUsersContact);
     app.post('/contact/add-new', authController.checkLoggedIn, contactController.addNew);
     app.delete('/contact/remove-request-contact', authController.checkLoggedIn, contactController.removeRequestContact);
+
+    app.get('/notification/read-more', authController.checkLoggedIn, notificationController.readMore);
+
 
 }
 
