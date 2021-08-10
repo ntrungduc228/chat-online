@@ -1,5 +1,7 @@
 const ContactModel = require('../models/contact.model');
 const UserModel = require('../models/user.model');
+const NotificationModel = require('../models/notification.model');
+
 
 const _ = require('lodash');
 
@@ -26,12 +28,23 @@ let addNew = (currentUserId, contactId) => {
             return reject(false);
         }
 
+        // Create contact
         let newContactItem = {
             userId: currentUserId,
             contactId: contactId,
         };
 
         let newContact = await ContactModel.createNew(newContactItem);
+
+        // Notification
+        let notificationItem = {
+            senderId: currentUserId,
+            receiverId: contactId,
+            type: NotificationModel.types.ADD_CONTACT,
+        };
+
+        await NotificationModel.model.createNew(notificationItem);
+
         resolve(newContact);
     })
 }
@@ -42,6 +55,10 @@ let removeRequestContact = (currentUserId, contactId) => {
        if(removeReq.n === 0) {
            return reject(false);
        }
+
+       // Remove notification
+       let notifTypeAddContact = NotificationModel.types.ADD_CONTACT;
+       await NotificationModel.model.removeRequestContactNotification(currentUserId, contactId, notifTypeAddContact);
        resolve(true);
     })
 }
