@@ -14,6 +14,9 @@ function removeRequestContact() {
                 
                     decreaseNumberNotifContact("count-request-contact-sent");
 
+                    // Remove at the modal tab waiting for accept
+                    $("#request-contact-sent").find(`li[data-uid = ${targetId}]`).remove();
+
                     socket.emit("remove-request-contact", {contactId: targetId});
                 }
             },
@@ -24,6 +27,9 @@ function removeRequestContact() {
 socket.on("response-remove-request-contact", function(user)  {
    $(".noti_content").find(`div[data-uid=${user.id}]`).remove(); // popup notification
    $("ul.list-notifications").find(`li>div[data-uid=${user.id}]`).parent().remove(); // modal notification
+
+   // Remove at the modal tab ask add friends
+   $("#request-contact-received").find(`li[data-uid = ${user.id}]`).remove();
 
    decreaseNumberNotifContact("count-request-contact-received");
 

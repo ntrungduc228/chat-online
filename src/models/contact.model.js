@@ -63,6 +63,102 @@ ContactSchema.statics = {
         ]
       }).exec();
     },
+
+    /**
+     * Get contacts by userId and limit
+     * @param {string} userId 
+     * @param {number} limit 
+     * @returns 
+     */
+    getContacts(userId, limit) {
+     return this.find({
+      $and: [
+        {$or: [
+          {"userId": userId},
+          {"contactId": userId}
+        ]},
+        {"status": true},
+      ]
+     }).sort({"createdAt": -1}).limit(limit).exec();
+    },
+
+    /**
+     * Get contacts sent by userId and limit
+     * @param {string} userId 
+     * @param {number} limit 
+     * @returns 
+     */
+     getContactsSent(userId, limit) {
+      return this.find({
+       $and: [
+         {"userId": userId},
+         {"status": false},
+       ]
+      }).sort({"createdAt": -1}).limit(limit).exec();
+     },
+ 
+
+    /**
+     * Get contacts received by userId and limit
+     * @param {string} userId 
+     * @param {number} limit 
+     * @returns 
+     */
+     getContactsReceived(userId, limit) {
+      return this.find({
+       $and: [
+         {"contactId": userId},
+         {"status": false},
+       ]
+      }).sort({"createdAt": -1}).limit(limit).exec();
+     },
+
+     /**
+     * Count all contacts by userId and limit
+     * @param {string} userId 
+     * @returns 
+     */
+    countAllGetContacts(userId) {
+      return this.countDocuments({
+       $and: [
+         {$or: [
+           {"userId": userId},
+           {"contactId": userId}
+         ]},
+         {"status": true},
+       ]
+      }).exec();
+     },
+ 
+     /**
+      * Count all contacts sent by userId and limit
+      * @param {string} userId 
+      * @returns 
+      */
+      countAllGetContactsSent(userId) {
+       return this.countDocuments({
+        $and: [
+          {"userId": userId},
+          {"status": false},
+        ]
+       }).exec();
+      },
+  
+ 
+     /**
+      * Count all contacts received by userId and limit
+      * @param {string} userId 
+      * @returns 
+      */
+      countAllGetContactsReceived(userId) {
+       return this.countDocuments({
+        $and: [
+          {"contactId": userId},
+          {"status": false},
+        ]
+       }).exec();
+      },
+ 
   };
 
 const Contact = mongoose.model('Contact', ContactSchema);
