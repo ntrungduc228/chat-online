@@ -56,7 +56,7 @@ function routes(app){
     app.delete('/contact/remove-request-contact', authController.checkLoggedIn, contactController.removeRequestContact);
 
     app.get('/notification/read-more', authController.checkLoggedIn, notificationController.readMore);
-
+    app.put('/notification/mark-all-as-read', authController.checkLoggedIn, notificationController.markAllAsRead);
 
 }
 

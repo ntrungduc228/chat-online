@@ -15,6 +15,16 @@ class NotificationController {
         }
     }
 
+    async markAllAsRead(req, res, next){
+        try{
+            let mark = await notification.markAllAsRead(req.user._id, req.body.targetUsers);
+            return res.status(200).send(mark);
+        }
+        catch(error){
+            res.status(500).send(error);
+        }
+    }
+
 
 }
 
