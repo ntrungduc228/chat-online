@@ -1,5 +1,5 @@
 const addNewContact = require('./contact/addNewContact');
-const removeRequestContact = require('./contact/removeRequestContact');
+const removeRequestContactSent = require('./contact/removeRequestContactSent');
 
 /**
  * 
@@ -8,7 +8,7 @@ const removeRequestContact = require('./contact/removeRequestContact');
 
 let initSockets = (io) => {
     addNewContact(io);
-    removeRequestContact(io);
+    removeRequestContactSent(io);
 }
 
 module.exports = initSockets;

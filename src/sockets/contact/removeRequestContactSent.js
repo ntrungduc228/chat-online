@@ -5,13 +5,13 @@ const {pushSocketIdToArray,emitNotifyToArray,removeSocketIdFromArray } = require
  * @param io from socket.io library 
  */
 
- function removeRequestContact(io) {    
+ function removeRequestContactSent(io) {    
     let clients = {};
     io.on('connection', (socket) => {
 
         clients = pushSocketIdToArray(clients, socket.request.user._id, socket.id);
 
-        socket.on("remove-request-contact", (data) => { 
+        socket.on("remove-request-contact-sent", (data) => { 
            
             let currentUser = {
                 id: socket.request.user._id,
@@ -19,7 +19,7 @@ const {pushSocketIdToArray,emitNotifyToArray,removeSocketIdFromArray } = require
 
             // Emit notification
             if(clients[data.contactId]){
-                emitNotifyToArray(clients, data.contactId, io, "response-remove-request-contact", currentUser);
+                emitNotifyToArray(clients, data.contactId, io, "response-remove-request-contact-sent", currentUser);
             }
         });
 
@@ -31,4 +31,4 @@ const {pushSocketIdToArray,emitNotifyToArray,removeSocketIdFromArray } = require
     })
 }
 
-module.exports = removeRequestContact;
+module.exports = removeRequestContactSent;

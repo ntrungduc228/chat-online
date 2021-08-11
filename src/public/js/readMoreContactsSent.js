@@ -5,21 +5,20 @@ $(document).ready(function() {
         $("#link-read-more-contacts-sent").css("display", "none");
         $(".read-more-contacts-sent-loader").css("display", "inline-block");
 
-        $.get(`/contact/read-more-contacts-sent?skipNumber=${skipNumber}`, function(newContactUsers) {
-           if(!newContactUsers.length){
-               alertify.notify("Đã xem hết danh sách", "error", 7);
-
-               $("#link-read-more-contacts-sent").css("display", "inline-block");
-               $(".read-more-contacts-sent-loader").css("display", "none");
-
-               return false;
-           }
-
-           newContactUsers.forEach(function(user){
-                $("#request-contact-sent")
-                .find("ul")
-                .append(
-                    ` <li class="_contactList" data-uid="${user._id} ">
+        setTimeout(() => {
+            $.get(`/contact/read-more-contacts-sent?skipNumber=${skipNumber}`, function(newContactUsers) {
+                if (!newContactUsers.length) {
+                    alertify.notify("Đã xem hết danh sách", "error", 7);
+                    $("#link-read-more-contacts-sent").css("display", "inline-block");
+                    $(".read-more-contacts-sent-loader").css("display", "none");
+    
+                    return false;
+                }
+                newContactUsers.forEach(function(user) {
+                    $("#request-contact-sent")
+                    .find("ul")
+                    .append(
+                        ` <li class="_contactList" data-uid="${user._id}">
                         <div class="contactPanel">
                             <div class="user-avatar">
                                 <img src="images/users/${user.avatar}" alt="">
@@ -31,19 +30,20 @@ $(document).ready(function() {
                             </div>
                             <br>
                             <div class="user-address">
-                                <span>&nbsp ${user.address != null ? user.address : ""}</span>
+                                <span>&nbsp ${(user.address !== null ) ? user.address : "người giời"}</span>
                             </div>
-                            <div class="user-remove-request-sent action-danger" data-uid="${user._id} ">
+                            <div class="user-remove-request-contact-sent action-danger display-important" data-uid="${user._id}">
                                 Hủy yêu cầu
                             </div>
                         </div>
-                    </li>
-                    `
-                ); // add modal contact
-           });
+                    </li>`);                                                       
+                });    
 
-           $("#link-read-more-contacts-sent").css("display", "inline-block");
-           $(".read-more-contacts-loader").css("display", "none");
-        });
+                removeRequestContactSent(); //js/removeRequestContactSent.js
+
+                $("#link-read-more-contacts-sent").css("display", "inline-block");
+                    $(".read-more-contacts-sent-loader").css("display", "none");
+            });
+        }, 100);        
     });
 });

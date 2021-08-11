@@ -4,7 +4,7 @@ const NotificationModel = require('../models/notification.model');
 
 const _ = require('lodash');
 
-const LIMIT_NUMBER_TAKEN = 1;
+const LIMIT_NUMBER_TAKEN = 10;
 
 let findUsersContact = (currentUserId, keyword) => {
     return new Promise(async (resolve, reject) => {
@@ -50,16 +50,16 @@ let addNew = (currentUserId, contactId) => {
     })
 }
 
-let removeRequestContact = (currentUserId, contactId) => {
+let removeRequestContactSent = (currentUserId, contactId) => {
     return new Promise(async (resolve, reject) => {
-       let removeReq = await ContactModel.removeRequestContact(currentUserId, contactId);
+       let removeReq = await ContactModel.removeRequestContactSent(currentUserId, contactId);
        if(removeReq.n === 0) {
            return reject(false);
        }
 
        // Remove notification
        let notifTypeAddContact = NotificationModel.types.ADD_CONTACT;
-       await NotificationModel.model.removeRequestContactNotification(currentUserId, contactId, notifTypeAddContact);
+       await NotificationModel.model.removeRequestContactSentNotification(currentUserId, contactId, notifTypeAddContact);
        resolve(true);
     })
 }
@@ -244,7 +244,7 @@ let readMoreContactsSent = (currentUserId, skipNumber) => {
 module.exports = {
     findUsersContact,
     addNew,
-    removeRequestContact,
+    removeRequestContactSent,
     getContacts,
     getContactsSent,
     getContactsReceived,
