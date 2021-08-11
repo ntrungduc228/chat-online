@@ -60,6 +60,48 @@ class ContactController {
         }
     }
 
+    async readMoreContacts(req, res, next) {
+        try{
+            // get skip number from query param
+            let skipNumber = +(req.query.skipNumber); // convert string to number
+
+            // get new notifications
+            let newContactUsers = await contact.readMoreContacts(req.user._id, skipNumber);
+            return res.status(200).send(newContactUsers);
+        }
+        catch(error){
+            res.status(500).send(error);
+        }
+    }
+
+    async readMoreContactsSent(req, res, next) {
+        try{
+            // get skip number from query param
+            let skipNumber = +(req.query.skipNumber); // convert string to number
+
+            // get new notifications
+            let newContactUsers = await contact.readMoreContactsSent(req.user._id, skipNumber);
+            return res.status(200).send(newContactUsers);
+        }
+        catch(error){
+            res.status(500).send(error);
+        }
+    }
+
+    async readMoreContactsReceived(req, res, next) {
+        try{
+            // get skip number from query param
+            let skipNumber = +(req.query.skipNumber); // convert string to number
+
+            // get new notifications
+            let newContactUsers = await contact.readMoreContactsReceived(req.user._id, skipNumber);
+            return res.status(200).send(newContactUsers);
+        }
+        catch(error){
+            res.status(500).send(error);
+        }
+    }
+
 }
 
 module.exports = new ContactController();

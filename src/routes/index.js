@@ -54,6 +54,9 @@ function routes(app){
     app.get('/contact/find-users/:keyword', authController.checkLoggedIn, contactValid.findUsersContact, contactController.findUsersContact);
     app.post('/contact/add-new', authController.checkLoggedIn, contactController.addNew);
     app.delete('/contact/remove-request-contact', authController.checkLoggedIn, contactController.removeRequestContact);
+    app.get('/contact/read-more-contacts', authController.checkLoggedIn, contactController.readMoreContacts);
+    app.get('/contact/read-more-contacts-sent', authController.checkLoggedIn, contactController.readMoreContactsSent);
+    app.get('/contact/read-more-contacts-received', authController.checkLoggedIn, contactController.readMoreContactsReceived);
 
     app.get('/notification/read-more', authController.checkLoggedIn, notificationController.readMore);
     app.put('/notification/mark-all-as-read', authController.checkLoggedIn, notificationController.markAllAsRead);
