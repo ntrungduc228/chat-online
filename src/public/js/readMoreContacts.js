@@ -19,7 +19,7 @@ $(document).ready(function() {
                 $("#contacts")
                 .find("ul")
                 .append(
-                    `<li class="_contactList" data-uid="${user._id} ">
+                    `<li class="_contactList" data-uid="${user._id}">
                             <div class="contactPanel">
                                 <div class="user-avatar">
                                     <img src="images/users/${user.avatar} " alt="">
@@ -36,7 +36,7 @@ $(document).ready(function() {
                                 <div class="user-talk" data-uid="${user._id} ">
                                     Trò chuyện
                                 </div>
-                                <div class="user-remove-contact action-danger" data-uid="${user._id} ">
+                                <div class="user-remove-contact action-danger" data-uid="${user._id}">
                                     Xóa liên hệ
                                 </div>
                             </div>

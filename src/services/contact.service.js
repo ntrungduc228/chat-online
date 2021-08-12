@@ -64,6 +64,21 @@ let removeRequestContactSent = (currentUserId, contactId) => {
     })
 }
 
+let removeRequestContactReceived = (currentUserId, contactId) => {
+    return new Promise(async (resolve, reject) => {
+       let removeReq = await ContactModel.removeRequestContactReceived(currentUserId, contactId);
+       if(removeReq.n === 0) {
+           return reject(false);
+       }
+
+       // Remove notification
+       // Chức năng này chưa muốn làm =))
+       //let notifTypeAddContact = NotificationModel.types.ADD_CONTACT;
+       //await NotificationModel.model.removeRequestContactReceivedNotification(currentUserId, contactId, notifTypeAddContact);
+       resolve(true);
+    })
+}
+
 let getContacts = (currentUserId) => {
     return new Promise(async (resolve, reject) => {
        try{
@@ -245,6 +260,7 @@ module.exports = {
     findUsersContact,
     addNew,
     removeRequestContactSent,
+    removeRequestContactReceived,
     getContacts,
     getContactsSent,
     getContactsReceived,

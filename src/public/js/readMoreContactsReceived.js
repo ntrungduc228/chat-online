@@ -19,7 +19,7 @@ $(document).ready(function() {
                 $("#request-contact-received")
                 .find("ul")
                 .append(
-                    ` <li class="_contactList" data-uid="${user._id} ">
+                    ` <li class="_contactList" data-uid="${user._id}">
                         <div class="contactPanel">
                             <div class="user-avatar">
                                 <img src="images/users/${user.avatar}" alt="">
@@ -36,7 +36,7 @@ $(document).ready(function() {
                             <div class="user-acccept-contact-received" data-uid="${user._id}">
                                 Chấp nhận
                             </div>
-                            <div class="user-reject-request-contact-received action-danger" data-uid="<%= user._id %>">
+                            <div class="user-remove-request-contact-received action-danger" data-uid="${user._id}">
                                 Xóa yêu cầu
                             </div>
                         </div>
@@ -44,6 +44,9 @@ $(document).ready(function() {
                     `
                 ); // add modal contact
            });
+
+           removeRequestContactReceived();  // js/removeRequestContactReceived.js
+           
 
            $("#link-read-more-contacts-received").css("display", "inline-block");
            $(".read-more-contacts-loader").css("display", "none");
