@@ -51,11 +51,22 @@ function routes(app){
     app.put('/user/update-info', authController.checkLoggedIn, userValid.updateInfo, userController.updateInfo);
     app.put('/user/update-password', authController.checkLoggedIn, userValid.updatePassword, userController.updatePassword);
     
-    app.get('/contact/find-users/:keyword', authController.checkLoggedIn, contactValid.findUsersContact, contactController.findUsersContact);
+    app.get('/contact/find-users/:keyword', 
+        authController.checkLoggedIn, 
+        contactValid.findUsersContact, 
+        contactController.findUsersContact);
     app.post('/contact/add-new', authController.checkLoggedIn, contactController.addNew);
-    app.delete('/contact/remove-request-contact-sent', authController.checkLoggedIn, contactController.removeRequestContactSent);
-    app.delete("/contact/remove-request-contact-received", authController.checkLoggedIn, contactController.removeRequestContactReceived);
-    app.put('/contact/approve-request-contact-received', authController.checkLoggedIn, contactController.approveRequestContactReceived);
+    app.delete('/contact/remove-contact', authController.checkLoggedIn, contactController.removeContact);
+    
+    app.delete('/contact/remove-request-contact-sent', 
+        authController.checkLoggedIn, 
+        contactController.removeRequestContactSent);
+    app.delete("/contact/remove-request-contact-received", 
+        authController.checkLoggedIn, 
+        contactController.removeRequestContactReceived);
+    app.put('/contact/approve-request-contact-received', 
+        authController.checkLoggedIn, 
+        contactController.approveRequestContactReceived);
     app.get('/contact/read-more-contacts', authController.checkLoggedIn, contactController.readMoreContacts);
     app.get('/contact/read-more-contacts-sent', authController.checkLoggedIn, contactController.readMoreContactsSent);
     app.get('/contact/read-more-contacts-received', authController.checkLoggedIn, contactController.readMoreContactsReceived);
