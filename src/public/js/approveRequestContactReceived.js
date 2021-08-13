@@ -31,6 +31,9 @@ function approveRequestContactReceived() {
                     increaseNumberNotifContact("count-contacts");                // js/caculateNotifiContacts.js
                     decreaseNumberNotification("noti_contact_counter", 1);      // js/caculateNotification.js
 
+                    removeContact();
+                   // Sau này làm chức năng chat thì sẽ xóa tiếp user ở phần chat
+
                     socket.emit("approve-request-contact-received", {contactId: targetId});
                 }
             }
@@ -83,6 +86,10 @@ socket.on("response-approve-request-contact-received", function(user) {
     `;
 
     $("#contacts").find("ul").prepend(userInfoHTML);
+
+    removeContact();
+    // Sau này làm chức năng chat thì sẽ xóa tiếp user ở phần chat
+    
 });
 
 $(document).ready(function() {
