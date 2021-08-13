@@ -59,7 +59,8 @@ ContactSchema.statics = {
       return this.deleteOne({
         $and: [
           {"userId": userId},
-          {"contactId": contactId}
+          {"contactId": contactId},
+          {"status": false}
         ]
       }).exec();
     },
@@ -74,9 +75,26 @@ ContactSchema.statics = {
       return this.deleteOne({
         $and: [
           {"userId": contactId},
-          {"contactId": userId}
+          {"contactId": userId},
+          {"status": false}
         ]
       }).exec();
+    },
+
+    /**
+     * Approve request contact received
+     * @param {string of currentUser} userId 
+     * @param {string} contactId 
+     * @returns 
+     */
+     approveRequestContactReceived(userId, contactId) {
+      return this.updateOne({
+        $and: [
+          {"userId": contactId},
+          {"contactId": userId},
+          {"status": false}
+        ]
+      }, {"status": true}).exec();
     },
 
     /**

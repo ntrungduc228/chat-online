@@ -4,7 +4,7 @@ const NotificationModel = require('../models/notification.model');
 
 const _ = require('lodash');
 
-const LIMIT_NUMBER_TAKEN = 10;
+const LIMIT_NUMBER_TAKEN = 1;
 
 let findUsersContact = (currentUserId, keyword) => {
     return new Promise(async (resolve, reject) => {
@@ -75,6 +75,26 @@ let removeRequestContactReceived = (currentUserId, contactId) => {
        // Chức năng này chưa muốn làm =))
        //let notifTypeAddContact = NotificationModel.types.ADD_CONTACT;
        //await NotificationModel.model.removeRequestContactReceivedNotification(currentUserId, contactId, notifTypeAddContact);
+       resolve(true);
+    })
+}
+
+let approveRequestContactReceived = (currentUserId, contactId) => {
+    return new Promise(async (resolve, reject) => {
+       let approveReq = await ContactModel.approveRequestContactReceived(currentUserId, contactId);
+    //    console.log('approve', approveReq);
+       if(approveReq.nModified === 0) {
+           return reject(false);
+       }
+
+       // Create notification
+        let notificationItem = {
+            senderId: currentUserId,
+            receiverId: contactId,
+            type: NotificationModel.types.APPROVE_CONTACT,
+        };
+
+        await NotificationModel.model.createNew(notificationItem);
        resolve(true);
     })
 }
@@ -261,6 +281,7 @@ module.exports = {
     addNew,
     removeRequestContactSent,
     removeRequestContactReceived,
+    approveRequestContactReceived,
     getContacts,
     getContactsSent,
     getContactsReceived,
