@@ -1,4 +1,4 @@
-const {notification, contact} = require('../services');
+const {notification, contact, message} = require('../services');
 
 class HomeController{
     
@@ -21,6 +21,12 @@ class HomeController{
         let countAllContactsReceived = await contact.countAllGetContactsReceived(req.user._id);
 
 
+        let getAllConversationItems = await message.getAllConversationItems(req.user._id);
+        let allConversations = getAllConversationItems.allConversations;
+        let userConversations = getAllConversationItems.userConversations;
+        let groupConversations = getAllConversationItems.groupConversations;
+
+
         res.render('main/components/home', {
             errors: req.flash("errors"),
             success: req.flash("success"),
@@ -33,6 +39,9 @@ class HomeController{
             countAllContacts: countAllContacts,
             countAllContactsSent: countAllContactsSent,
             countAllContactsReceived: countAllContactsReceived,
+            allConversations: allConversations,
+            userConversations: userConversations,
+            groupConversations: groupConversations,
 
         });
     }
