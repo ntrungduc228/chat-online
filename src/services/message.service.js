@@ -1,9 +1,13 @@
 const ContactModel = require('../models/contact.model');
 const UserModel = require('../models/user.model');
 const ChatGroupModel = require('../models/chatGroup.model');
+const MessageModel = require('../models/message.model');
+
 const _ = require('lodash');
 
 const LIMIT_CONVERSATIONS_TAKEN = 15;
+const LIMIT_MESSAGES_TAKEN = 30;
+
 
 /**
  * Get all conversations
@@ -35,11 +39,28 @@ let getAllConversationItems = (currentUserId) => {
             allConversations = _.sortBy(allConversations, item => {
                 return -item.updatedAt;
             });
-            
+
+            // Get messages to apply screen chat
+            let allConversationWithMessagesPromise = allConversations.map(async (conversation) => {
+                let getMessages = await MessageModel.model.getMessages(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
+                
+                conversation = conversation.toObject();
+                conversation.messages = getMessages;
+                return conversation;
+            });
+
+            let allConversationWithMessages = await Promise.all(allConversationWithMessagesPromise);
+
+            // Sort by updatedAt desending
+            allConversationWithMessages = _.sortBy(allConversationWithMessages, (item) => {
+                return -item.updatedAt;
+            });
+
             resolve({
                 userConversations,
                 groupConversations,
-                allConversations
+                allConversations,
+                allConversationWithMessages,
             });
 
         }
