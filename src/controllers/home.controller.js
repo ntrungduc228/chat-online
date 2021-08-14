@@ -1,4 +1,5 @@
 const {notification, contact, message} = require('../services');
+const {bufferToBase64} = require('../helpers/client');
 
 class HomeController{
     
@@ -25,7 +26,8 @@ class HomeController{
         let allConversations = getAllConversationItems.allConversations;
         let userConversations = getAllConversationItems.userConversations;
         let groupConversations = getAllConversationItems.groupConversations;
-
+        // All message with conversation max 30 items
+        let allConversationWithMessages = getAllConversationItems.allConversationWithMessages;
 
         res.render('main/components/home', {
             errors: req.flash("errors"),
@@ -42,6 +44,8 @@ class HomeController{
             allConversations: allConversations,
             userConversations: userConversations,
             groupConversations: groupConversations,
+            allConversationWithMessages: allConversationWithMessages,
+            bufferToBase64: bufferToBase64,
 
         });
     }

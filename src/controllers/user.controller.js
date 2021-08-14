@@ -43,8 +43,8 @@ class UserController {
               // update
               let userUpdate = await user.updateUser(req.user._id, updateUserItem);
         
-              // Remove old user avatar
-              await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`);
+              // Khong xoa avatar cu cua nguoi dung vi trong bang message can phai su dung
+              //await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`);
         
               let result = {
                 message: transSuccess.user_info_updated,
