@@ -24,7 +24,7 @@ ChatGroupSchema.statics = {
     getChatGroups(userId, limit) {
         return this.find({
             "members": {$elemMatch: {"userId": userId}}
-        }).sort({"createdAt": -1}).limit(limit).exec();
+        }).sort({"updatedAt": -1}).limit(limit).exec();
     },
 };
 
