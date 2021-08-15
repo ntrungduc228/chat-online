@@ -37,20 +37,10 @@
                                             <%= lastItemOfArray(conversation.messages).text %>
                                         <% } %>
                                         <% if(lastItemOfArray(conversation.messages).messageType === "image") { %> 
-                                            <% if(lastItemOfArray(conversation.messages).senderId == user.id) { %>
-                                                <%= user.username %>
-                                            <% } else { %>
-                                                <%= conversation.username %>
-                                            <% } %> 
-                                            đã gửi 1 ảnh
+                                            Hình ảnh ...
                                         <% } %>
                                         <% if(lastItemOfArray(conversation.messages).messageType === "file") { %> 
-                                            <% if(lastItemOfArray(conversation.messages).senderId == user.id) { %>
-                                                <%= user.username %>
-                                            <% } else { %>
-                                                <%= conversation.username %>
-                                            <% } %>  
-                                            đã gửi 1 file đính kèm
+                                            File đính kèm ...
                                         <% } %>
                                     </span>
                                 </li>
@@ -189,20 +179,10 @@
                                             <%= lastItemOfArray(conversation.messages).text %>
                                         <% } %>
                                         <% if(lastItemOfArray(conversation.messages).messageType === "image") { %> 
-                                            <% if(lastItemOfArray(conversation.messages).senderId == user.id) { %>
-                                                <%= user.username %>
-                                            <% } else { %>
-                                                <%= conversation.username %>
-                                            <% } %> 
-                                            đã gửi 1 ảnh
+                                            Hình ảnh ...
                                         <% } %>
                                         <% if(lastItemOfArray(conversation.messages).messageType === "file") { %> 
-                                            <% if(lastItemOfArray(conversation.messages).senderId == user.id) { %>
-                                                <%= user.username %>
-                                            <% } else { %>
-                                                <%= conversation.username %>
-                                            <% } %>  
-                                            đã gửi 1 file đính kèm
+                                            File đính kèm ...
                                         <% } %>
                                     </span>
                                 </li>
