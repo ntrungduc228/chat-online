@@ -57,9 +57,6 @@ let getAllConversationItems = (currentUserId) => {
             });
 
             resolve({
-                userConversations,
-                groupConversations,
-                allConversations,
                 allConversationWithMessages,
             });
 
