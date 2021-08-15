@@ -46,7 +46,6 @@ class HomeController{
             groupConversations: groupConversations,
             allConversationWithMessages: allConversationWithMessages,
             bufferToBase64: bufferToBase64,
-
         });
     }
 }
