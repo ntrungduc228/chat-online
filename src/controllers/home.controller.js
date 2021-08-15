@@ -1,5 +1,5 @@
 const {notification, contact, message} = require('../services');
-const {bufferToBase64} = require('../helpers/client');
+const {bufferToBase64, lastItemOfArray, convertTimestampToHumanTime} = require('../helpers/client');
 
 class HomeController{
     
@@ -23,9 +23,6 @@ class HomeController{
 
 
         let getAllConversationItems = await message.getAllConversationItems(req.user._id);
-        let allConversations = getAllConversationItems.allConversations;
-        let userConversations = getAllConversationItems.userConversations;
-        let groupConversations = getAllConversationItems.groupConversations;
         // All message with conversation max 30 items
         let allConversationWithMessages = getAllConversationItems.allConversationWithMessages;
 
@@ -41,11 +38,10 @@ class HomeController{
             countAllContacts: countAllContacts,
             countAllContactsSent: countAllContactsSent,
             countAllContactsReceived: countAllContactsReceived,
-            allConversations: allConversations,
-            userConversations: userConversations,
-            groupConversations: groupConversations,
             allConversationWithMessages: allConversationWithMessages,
             bufferToBase64: bufferToBase64,
+            lastItemOfArray: lastItemOfArray,
+            convertTimestampToHumanTime: convertTimestampToHumanTime,
         });
     }
 }
