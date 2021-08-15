@@ -1081,9 +1081,9 @@ label:focus,
 
 .right .bubble.you img.avatar-small {
   margin-right: 10px;
-  position: relative;
+  /* position: relative;
   right: 20%;
-  top: -14px;
+  top: -14px; */
 }
 
 
