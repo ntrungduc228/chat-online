@@ -29,6 +29,14 @@ const MessageSchema = new Schema({
 
 MessageSchema.statics = {
     /**
+     * Create new item
+     * @param {object} item 
+     */
+    createNew(item){
+        return this.create(item);
+    },
+
+    /**
      * Get message of personal limited one time
      * @param {string} senderId currentUserId
      * @param {string} receiverId id of currentUser's contact

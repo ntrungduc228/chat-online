@@ -265,6 +265,28 @@ ContactSchema.statics = {
           ]
         }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
       },
+
+      /**
+       * update contact (chat personal) when has a new message
+       * @param {string} userId 
+       * @param {string} contactId 
+       */
+      updateWhenHasNewMessage(userId, contactId){
+        return this.update({
+          $or: [
+            {$and: [
+              {"userId": userId},
+              {"contactId": contactId},
+            ]},
+            {$and: [
+              {"userId": contactId},
+              {"contactId": userId},
+            ]},
+          ]
+        }, {
+          "updatedAt": Date.now(),
+        }).exec();
+      },
   };
 
 const Contact = mongoose.model('Contact', ContactSchema);

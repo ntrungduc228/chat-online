@@ -3,7 +3,7 @@ const homeController = require('../controllers/home.controller');
 const userController = require('../controllers/user.controller');
 const contactController = require('../controllers/contact.controller');
 const notificationController = require('../controllers/notification.controller');
-
+const messageController = require('../controllers/message.controller');
 
 
 const passport = require('passport');
@@ -11,7 +11,7 @@ const initPassportLocal = require('../controllers/passport/local');
 const initPassportFacebook = require('../controllers/passport/facebook');
 const initPassportGoogle = require('../controllers/passport/google');
 
-const {authValid, userValid, contactValid} = require('../validation/');
+const {authValid, userValid, contactValid, messageValid} = require('../validation/');
 
 // Init all passport
 initPassportLocal();
@@ -74,6 +74,7 @@ function routes(app){
     app.get('/notification/read-more', authController.checkLoggedIn, notificationController.readMore);
     app.put('/notification/mark-all-as-read', authController.checkLoggedIn, notificationController.markAllAsRead);
 
+    app.post('/message/add-new-text-emoji', authController.checkLoggedIn, messageValid.checkMessageLength, messageController.addNewTextEmoji);
 }
 
 module.exports = routes;

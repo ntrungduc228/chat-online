@@ -1,5 +1,5 @@
 function textAndEmojiChat(divId) {
-    $(".emojionearea").unbind("click").on("keyup", function(element) {
+    $(".emojionearea").unbind("keyup").on("keyup", function(element) {
         if(element.which == 13) {
             let targetId = $(`#write-chat_${divId}`).data("chat");
             let messageVal =  $(`#write-chat_${divId}`).val();
@@ -20,9 +20,11 @@ function textAndEmojiChat(divId) {
             // Call api send message
             $.post("/message/add-new-text-emoji", dataTextEmojiForSend, function(data) {
                 // success
-
+                console.log(data);
             }).fail(function(response) {
                 // error
+                console.log(response);
+                alertify.notify(response.responseText, "error", 7);
             });
         }
     });
