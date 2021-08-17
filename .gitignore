@@ -7,3 +7,4 @@ node_modules/
 *.idea
 
 src/public/bower_components/
+src/public/emojione
