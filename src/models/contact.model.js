@@ -272,7 +272,7 @@ ContactSchema.statics = {
        * @param {string} contactId 
        */
       updateWhenHasNewMessage(userId, contactId){
-        return this.update({
+        return this.updateOne({
           $or: [
             {$and: [
               {"userId": userId},
