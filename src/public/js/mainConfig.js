@@ -234,5 +234,4 @@ $(document).ready(function() {
   // Click vào phần tử đầu tiên của cuộc trò chuyện khi load trang web
   $("ul.people").find("a")[0].click();
 
-    
 });

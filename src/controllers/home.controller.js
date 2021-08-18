@@ -25,7 +25,7 @@ class HomeController{
         let getAllConversationItems = await message.getAllConversationItems(req.user._id);
         // All message with conversation max 30 items
         let allConversationWithMessages = getAllConversationItems.allConversationWithMessages;
-
+        
         res.render('main/components/home', {
             errors: req.flash("errors"),
             success: req.flash("success"),
