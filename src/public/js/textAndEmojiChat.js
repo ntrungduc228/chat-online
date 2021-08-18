@@ -82,6 +82,11 @@ function textAndEmojiChat(divId) {
 
 $(document).ready(function() {
     socket.on('response-chat-text-emoji', function(response) {
+        if(response.currentGroupId){
+            $(`.chat[data-chat=${response.currentGroupId}]`).find("div.bubble-typing-gif").remove();
+        }else{
+            $(`.chat[data-chat=${response.currentUserId}]`).find("div.bubble-typing-gif").remove();
+        }
         // console.log(response);
         let divId = "";
 
