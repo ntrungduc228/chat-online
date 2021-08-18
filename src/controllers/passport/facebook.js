@@ -1,6 +1,8 @@
 const passport = require('passport');
 const passportFacebook = require('passport-facebook');
 const UserModel = require('../../models/user.model');
+const ChatGroupModel = require('../../models/chatGroup.model');
+
 const {transErrors, transSuccess} = require('../../../lang/vi');
 
 let FacebookStrategy = passportFacebook.Strategy;
@@ -57,13 +59,13 @@ function initPassportFacebook() {
     passport.deserializeUser(async (id, done) => {
         try {
             let user = await UserModel.findUserByIdForSessionToUse(id);
-            //let getChatGroupIds = await ChatGroupModel.getChatGroupIdsByUser(user._id);
+            let getChatGroupIds = await ChatGroupModel.getChatGroupIdsByUser(user._id);
 
-            //user = user.toObject();
-            //user.chatGroupIds = getChatGroupIds;
+            user = user.toObject();
+            user.chatGroupIds = getChatGroupIds;
             return done(null, user);
         } catch (error) {
-            return done(error, null);
+            return done(error, null); 
         }
     });
 }

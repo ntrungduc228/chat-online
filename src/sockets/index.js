@@ -3,7 +3,7 @@ const removeRequestContactSent = require('./contact/removeRequestContactSent');
 const removeRequestContactReceived = require('./contact/removeRequestContactReceived');
 const approveRequestContactReceived = require('./contact/approveRequestContactReceived');
 const removeContact = require('./contact/removeContact');
-
+const chatTextEmoji = require('./chat/chatTextEmoji');
 
 /**
  * 
@@ -16,6 +16,7 @@ let initSockets = (io) => {
     removeRequestContactReceived(io);
     approveRequestContactReceived(io);
     removeContact(io);
+    chatTextEmoji(io);
 }
 
 module.exports = initSockets;
