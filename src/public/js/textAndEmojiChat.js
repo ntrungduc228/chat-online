@@ -71,6 +71,15 @@ function textAndEmojiChat(divId) {
                 // Edit real time
                 socket.emit('chat-text-emoji', dataToEmit);
 
+                // Emit remove typing real-time
+                typingOff(divId);
+
+                //If this has typing, remove that immediate
+                let checkTyping = $(`.chat[data-chat=${divId}]`).find("div.bubble-typing-gif");
+                if (checkTyping.length) {
+                    checkTyping.remove();
+                }
+
             }).fail(function(response) {
                 // error
                 console.log(response);
@@ -82,12 +91,7 @@ function textAndEmojiChat(divId) {
 
 $(document).ready(function() {
     socket.on('response-chat-text-emoji', function(response) {
-        if(response.currentGroupId){
-            $(`.chat[data-chat=${response.currentGroupId}]`).find("div.bubble-typing-gif").remove();
-        }else{
-            $(`.chat[data-chat=${response.currentUserId}]`).find("div.bubble-typing-gif").remove();
-        }
-        // console.log(response);
+        
         let divId = "";
 
         let messageOfYou = $(`<div class="bubble you" data-mess-id="${response.message._id}"></div>`);
@@ -133,6 +137,9 @@ $(document).ready(function() {
             $(this).off("ducnguyen.moveConversationToTheTop");
         });
         $(`.person[data-chat = ${divId}]`).trigger("ducnguyen.moveConversationToTheTop");
+
         // Edit real time - nothing to do here
+        // Emit remove typing real-time - nothing to do here
+        //If this has typing, remove that immediate - nothing to do here
     });
 });

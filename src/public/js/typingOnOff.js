@@ -36,6 +36,10 @@ $(document).ready(function() {
             }
 
         }else{
+            let checkTyping = $(`.chat[data-chat=${response.currentUserId}]`).find("div.bubble-typing-gif");
+            if (checkTyping.length) {
+                return false;
+            }
             $(`.chat[data-chat=${response.currentUserId}]`).append(messageTyping);
             nineScrollRight(response.currentUserId);
         }
