@@ -75,6 +75,7 @@ function routes(app){
     app.put('/notification/mark-all-as-read', authController.checkLoggedIn, notificationController.markAllAsRead);
 
     app.post('/message/add-new-text-emoji', authController.checkLoggedIn, messageValid.checkMessageLength, messageController.addNewTextEmoji);
+    app.post('/message/add-new-image', authController.checkLoggedIn, messageController.addNewImage);
 }
 
 module.exports = routes;
