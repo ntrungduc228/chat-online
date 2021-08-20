@@ -5,6 +5,7 @@ const app = require('../config/app.config');
 const {transErrors, transSuccess} = require("./../../lang/vi");
 const fsExtra = require('fs-extra');
 
+// handle image
 let storageImageChat = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, app.image_message_directory);
@@ -25,6 +26,22 @@ let imageMessageUploadFile = multer({
     limits: {fileSize: app.image_message_limit_size}
 }).single("my-image-chat");
 
+
+// handle file attachment
+let storageAttachmentChat = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, app.attachment_message_directory);
+    },
+        filename: (req, file, callback) => {
+        let attachmentName = `${file.originalname}`;
+        callback(null, attachmentName);
+    }
+});
+
+let attachmentMessageUploadFile = multer({
+    storage: storageAttachmentChat,
+    limits: {fileSize: app.attachment_message_limit_size}
+}).single("my-attachment-chat");
 class MessageController {
 
     async addNewTextEmoji(req, res, next) {
@@ -94,6 +111,40 @@ class MessageController {
         });
     }
 
+    addNewAttachment(req, res, next) {
+        
+        attachmentMessageUploadFile(req, res, async(error) => {
+            if(error) {
+                if (error.message) { 
+                  console.log(error.message);
+                  return res.status(500).send(transErrors.attachment_message_size);
+                } 
+                return res.status(500).send(error);
+            }
+            try{
+                let sender = {
+                    id: req.user._id,
+                    name: req.user.username,
+                    avatar: req.user.avatar,
+                };
+    
+                let receiverId = req.body.uid;
+                let messageVal = req.file;
+                let isChatGroup = req.body.isChatGroup;
+    
+                let newMessage = await message.addNewAttachment(sender, receiverId, messageVal, isChatGroup);
+
+                // Remove attachment, because this is attachment is save to mongodb
+                await fsExtra.remove(`${app.attachment_message_directory}/${newMessage.file.fileName}`);
+
+                return res.status(200).send({message: newMessage});
+           }
+           catch(error){
+                return res.status(500).send(error);
+           }
+            
+        });
+    }
     
 }
 

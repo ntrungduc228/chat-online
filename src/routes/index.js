@@ -76,6 +76,7 @@ function routes(app){
 
     app.post('/message/add-new-text-emoji', authController.checkLoggedIn, messageValid.checkMessageLength, messageController.addNewTextEmoji);
     app.post('/message/add-new-image', authController.checkLoggedIn, messageController.addNewImage);
+    app.post('/message/add-new-attachment', authController.checkLoggedIn, messageController.addNewAttachment);
 }
 
 module.exports = routes;
