@@ -7,6 +7,7 @@ const chatTextEmoji = require('./chat/chatTextEmoji');
 const typingOn = require('./chat/typingOn');
 const typingOff = require('./chat/typingOff');
 const chatImage = require('./chat/chatImage');
+const chatAttachment = require('./chat/chatAttachment');
 
 
 /**
@@ -24,6 +25,7 @@ let initSockets = (io) => {
     typingOn(io);
     typingOff(io);
     chatImage(io);
+    chatAttachment(io);
 }
 
 module.exports = initSockets;
