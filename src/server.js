@@ -12,13 +12,17 @@ const initSockets = require('./sockets/');
 const routes = require('./routes');
 const db = require('./config/db.config');
 
-const passportSocketIo = require("passport.socketio");
 const cookieParser = require('cookie-parser');
 const configSocketIo = require('./config/socketio.config');
+const events = require('events');
+const configParams = require('./config/app.config');
 
 // Init app express
 
 const app = express();
+
+// Set max connection event listeners
+events.EventEmitter.defaultMaxListeners = configParams.max_event_listeners;
 
 // Init server with socket.io & express app
 let server = http.createServer(app);
