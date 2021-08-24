@@ -1,7 +1,44 @@
 const {notification, contact, message} = require('../services');
 const {bufferToBase64, lastItemOfArray, convertTimestampToHumanTime} = require('../helpers/client');
+const request = require('request');
 
+function getICETurnServer() {
+    return new Promise(async (resolve, reject) => {
+        // Node Get ICE STUN and TURN list
+        let o = {
+            format: "urls"
+        };
+
+        let bodyString = JSON.stringify(o);
+        let options = {
+            url: "https://global.xirsys.net/_turn/awesome-chat",
+            // host: "global.xirsys.net",
+            // path: "/_turn/awesome-chat",
+            method: "PUT",
+            headers: {
+                "Authorization": "Basic " + Buffer.from("ntrungduc:eff04ce4-0465-11ec-8eef-0242ac130003").toString("base64"),
+                "Content-Type": "application/json",
+                "Content-Length": bodyString.length
+            }
+        };
+
+        // Cal request to get ICE list of turn server
+        request(options, (err, response, body) => {
+            if(err) {
+                console.log("Error getting ICE list", err);
+                return reject(err);
+            }
+
+            let bodyJson = JSON.parse(body);
+            resolve(bodyJson.v.iceServers);
+        });
+
+        
+    });
+}
 class HomeController{
+
+    
     
     async getHomePage(req, res, next) {
         // Only 10 items one time
@@ -25,6 +62,9 @@ class HomeController{
         let getAllConversationItems = await message.getAllConversationItems(req.user._id);
         // All message with conversation max 30 items
         let allConversationWithMessages = getAllConversationItems.allConversationWithMessages;
+
+        // get ICE list from xlrsys turn server 
+        let iceServerList = await getICETurnServer();
         
         res.render('main/components/home', {
             errors: req.flash("errors"),
@@ -42,6 +82,7 @@ class HomeController{
             bufferToBase64: bufferToBase64,
             lastItemOfArray: lastItemOfArray,
             convertTimestampToHumanTime: convertTimestampToHumanTime,
+            iceServerList: JSON.stringify(iceServerList),
         });
     }
 }
