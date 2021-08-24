@@ -9,6 +9,7 @@ const typingOff = require('./chat/typingOff');
 const chatImage = require('./chat/chatImage');
 const chatAttachment = require('./chat/chatAttachment');
 const chatVideo = require('./chat/chatVideo');
+const userOnlineOffline = require('./status/userOnlineOffline');
 
 
 /**
@@ -28,6 +29,7 @@ let initSockets = (io) => {
     chatImage(io);
     chatAttachment(io);
     chatVideo(io);
+    userOnlineOffline(io);
 }
 
 module.exports = initSockets;
