@@ -5,34 +5,34 @@ const request = require('request');
 function getICETurnServer() {
     return new Promise(async (resolve, reject) => {
         // Node Get ICE STUN and TURN list
-        let o = {
-            format: "urls"
-        };
+        // let o = {
+        //     format: "urls"
+        // };
 
-        let bodyString = JSON.stringify(o);
-        let options = {
-            url: "https://global.xirsys.net/_turn/awesome-chat",
-            // host: "global.xirsys.net",
-            // path: "/_turn/awesome-chat",
-            method: "PUT",
-            headers: {
-                "Authorization": "Basic " + Buffer.from("ntrungduc:eff04ce4-0465-11ec-8eef-0242ac130003").toString("base64"),
-                "Content-Type": "application/json",
-                "Content-Length": bodyString.length
-            }
-        };
+        // let bodyString = JSON.stringify(o);
+        // let options = {
+        //     url: "https://global.xirsys.net/_turn/awesome-chat",
+        //     // host: "global.xirsys.net",
+        //     // path: "/_turn/awesome-chat",
+        //     method: "PUT",
+        //     headers: {
+        //         "Authorization": "Basic " + Buffer.from("ntrungduc:eff04ce4-0465-11ec-8eef-0242ac130003").toString("base64"),
+        //         "Content-Type": "application/json",
+        //         "Content-Length": bodyString.length
+        //     }
+        // };
 
-        // Cal request to get ICE list of turn server
-        request(options, (err, response, body) => {
-            if(err) {
-                console.log("Error getting ICE list", err);
-                return reject(err);
-            }
+        // // Cal request to get ICE list of turn server
+        // request(options, (err, response, body) => {
+        //     if(err) {
+        //         console.log("Error getting ICE list", err);
+        //         return reject(err);
+        //     }
 
-            let bodyJson = JSON.parse(body);
-            resolve(bodyJson.v.iceServers);
-        });
-
+        //     let bodyJson = JSON.parse(body);
+        //     resolve(bodyJson.v.iceServers);
+        // });
+        resolve([]);
         
     });
 }
