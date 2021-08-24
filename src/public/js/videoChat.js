@@ -32,13 +32,14 @@ $(document).ready(function () {
         alertify.notify("Người dùng này hiện không trực tuyến", "error", 7);
     });
 
+
+    let iceServerList = $("#ice-server-list").val();
+
     let getPeerId = "";
-    // const peer = new Peer({
-    //     host: '/',
-    //     port: "3000",
-    //     path: '/peerjs'
-    // });
-    const peer = new Peer();
+    
+    const peer = new Peer({
+        config: {"iceServers": JSON.parse(iceServerList)}
+    });
    // console.log(peer); 
     peer.on("open",  function(peerId) {
         getPeerId = peerId;
@@ -233,7 +234,7 @@ $(document).ready(function () {
             if(err.toString().includes("Permission denied")) { console.log('Permission denied');
                 alertify.notify("Xin lỗi, bạn đã tắt quyền truy cập nghe gọi vào thiết bị trên trình duyệt, vui lòng mở lại trong phần cài đặt của trình duyệt.", "error", 7);
             }
-            if(err.toString().includes("NotFoundError: Requested devide not found")) {
+            if(err.toString().includes("DOMException: Could not start video source")) {
                 alertify.notify("Xin lỗi, chúng tôi không tìm thấy bộ phận hỗ trợ nghe gọi trên thiết bị nghe gọi của bạn. ", "error", 7);
             }
         })
@@ -281,7 +282,7 @@ $(document).ready(function () {
                 if(err.toString().includes("Permission denied")) {
                     alertify.notify("Xin lỗi, bạn đã tắt quyền truy cập nghe gọi vào thiết bị trên trình duyệt, vui lòng mở lại trong phần cài đặt của trình duyệt.", "error", 7);
                 }
-                if(err.toString().includes("DOMException: Requested devide not found")) {
+                if(err.toString().includes("DOMException: Could not start video source")) {
                     alertify.notify("Xin lỗi, chúng tôi không tìm thấy bộ phận hỗ trợ nghe gọi trên thiết bị nghe gọi của bạn. ", "error", 7);
                 }
             });
