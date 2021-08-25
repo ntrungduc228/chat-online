@@ -4,6 +4,7 @@ const userController = require('../controllers/user.controller');
 const contactController = require('../controllers/contact.controller');
 const notificationController = require('../controllers/notification.controller');
 const messageController = require('../controllers/message.controller');
+const groupChatController = require('../controllers/groupChat.controller');
 
 
 const passport = require('passport');
@@ -11,7 +12,7 @@ const initPassportLocal = require('../controllers/passport/local');
 const initPassportFacebook = require('../controllers/passport/facebook');
 const initPassportGoogle = require('../controllers/passport/google');
 
-const {authValid, userValid, contactValid, messageValid} = require('../validation/');
+const {authValid, userValid, contactValid, messageValid, groupChatValid} = require('../validation/');
 
 // Init all passport
 initPassportLocal();
@@ -81,6 +82,8 @@ function routes(app){
     app.post('/message/add-new-text-emoji', authController.checkLoggedIn, messageValid.checkMessageLength, messageController.addNewTextEmoji);
     app.post('/message/add-new-image', authController.checkLoggedIn, messageController.addNewImage);
     app.post('/message/add-new-attachment', authController.checkLoggedIn, messageController.addNewAttachment);
+
+    app.post("/group-chat/add-new", authController.checkLoggedIn, groupChatValid.addNewGroup, groupChatController.addNewGroup);
 }
 
 module.exports = routes;

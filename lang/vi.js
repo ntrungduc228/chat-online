@@ -10,7 +10,7 @@ const transValidation = {
     keyword_find_user: "Lỗi từ khóa tìm kiếm, chỉ cho phép chữ cái, số hay khoảng trống.",
     message_text_emoji_incorrect: "Tin nhắn không hợp lệ, đảm bảo tối thiểu 1 ký tự, tôi đa 400 ký tự.",
     add_new_group_users_incorrect: "Vui lòng chọn bạn bè vào nhóm, tối thiểu 2 người.",
-    add_new_group_name_incorrect: "Vui lòng nhập tên cuộc trò chuyện, giới hạn 5-30 ký tự và không chứa ký tự đặc biệt.",
+    add_new_group_name_incorrect: "Vui lòng nhập tên cuộc trò chuyện, giới hạn 5-40 ký tự và không chứa ký tự đặc biệt.",
     };
     
 const transErrors = {
