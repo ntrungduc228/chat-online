@@ -70,6 +70,10 @@ function routes(app){
     app.get('/contact/read-more-contacts', authController.checkLoggedIn, contactController.readMoreContacts);
     app.get('/contact/read-more-contacts-sent', authController.checkLoggedIn, contactController.readMoreContactsSent);
     app.get('/contact/read-more-contacts-received', authController.checkLoggedIn, contactController.readMoreContactsReceived);
+    app.get('/contact/search-friends/:keyword', 
+        authController.checkLoggedIn, 
+        contactValid.searchFriends, 
+        contactController.searchFriends);
 
     app.get('/notification/read-more', authController.checkLoggedIn, notificationController.readMore);
     app.put('/notification/mark-all-as-read', authController.checkLoggedIn, notificationController.markAllAsRead);
