@@ -2,6 +2,7 @@ const authValid = require('./auth.validation');
 const userValid = require('./user.validation');
 const contactValid = require('./contact.validation');
 const messageValid = require('./message.validation');
+const groupChatValid = require('./groupChat.validation');
 
 
  module.exports = {
@@ -9,4 +10,5 @@ const messageValid = require('./message.validation');
     userValid,
     contactValid,
     messageValid,
+    groupChatValid,
  };
