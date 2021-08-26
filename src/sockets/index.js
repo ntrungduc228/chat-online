@@ -10,6 +10,7 @@ const chatImage = require('./chat/chatImage');
 const chatAttachment = require('./chat/chatAttachment');
 const chatVideo = require('./chat/chatVideo');
 const userOnlineOffline = require('./status/userOnlineOffline');
+const newGroupChat = require('./group/newGroupChat');
 
 
 /**
@@ -30,6 +31,7 @@ let initSockets = (io) => {
     chatAttachment(io);
     chatVideo(io);
     userOnlineOffline(io);
+    newGroupChat(io);
 }
 
 module.exports = initSockets;
