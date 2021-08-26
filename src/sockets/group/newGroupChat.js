@@ -5,7 +5,7 @@ const {pushSocketIdToArray,emitNotifyToArray,removeSocketIdFromArray } = require
  * @param io from socket.io library 
  */
 
-function typingOn(io) {
+function newGroupChat(io) {
     let clients = {};
     io.on('connection', (socket) => {
 
@@ -14,37 +14,22 @@ function typingOn(io) {
             clients = pushSocketIdToArray(clients, group._id, socket.id);
         });
 
-        // when a new group chat has been created
         socket.on("new-group-created", (data) => {
             clients = pushSocketIdToArray(clients, data.groupChat._id, socket.id);
+
+            let response = {
+                groupChat: data.groupChat,
+            };
+
+            data.groupChat.members.forEach((member) => {
+                if(clients[member.userId] && member.userId != socket.request.user._id){
+                    emitNotifyToArray(clients, member.userId, io, "response-new-group-created", response);
+                }
+            })
         });
 
         socket.on("member-received-group-chat", (data) => {
             clients = pushSocketIdToArray(clients, data.groupChatId, socket.id);
-        });
-
-        socket.on("user-is-typing", (data) => {
-            if(data.groupId){
-                let response = {
-                    currentGroupId: data.groupId,
-                    currentUserId: socket.request.user._id,
-                };
- 
-                if(clients[data.groupId]){
-                    emitNotifyToArray(clients, data.groupId, io, "response-user-is-typing", response);
-                }
-            }
-
-            if(data.contactId){
-               let response = {
-                   currentUserId: socket.request.user._id,
-               };
-
-               if(clients[data.contactId]){
-                    emitNotifyToArray(clients, data.contactId, io, "response-user-is-typing", response);
-               }
-            }
-            
         });
 
         socket.on("disconnect", () => {
@@ -57,4 +42,4 @@ function typingOn(io) {
     })
 }
 
-module.exports = typingOn;
+module.exports = newGroupChat;

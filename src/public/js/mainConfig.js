@@ -133,7 +133,6 @@ function gridPhotos(layoutNumber) {
 }
 
 
-
 function flashMasterNotify() {
   let notify = $(".master-success-message").text();
   if(notify.length) {

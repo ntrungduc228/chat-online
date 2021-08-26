@@ -5,7 +5,7 @@ let addNewGroup = (currentUserId, arrayMemberIds, groupChatName) => {
     return new Promise(async (resolve, reject) => {
         try{
             // Add current userId to array members
-            arrayMemberIds.unshift(currentUserId);
+            arrayMemberIds.unshift({userId: `${currentUserId}`});
 
             arrayMemberIds = _.uniqBy(arrayMemberIds, "userId");
 
