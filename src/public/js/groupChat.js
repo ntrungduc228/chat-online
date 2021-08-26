@@ -232,7 +232,7 @@ function callCreateGroupChat() {
           socket.emit("new-group-created", {groupChat: data.groupChat});
 
           // Step 09: Emit when members received a new group chat - nothing to do here
-            // Step 10: update online
+         // Step 10: update online
             socket.emit("check-status");
 
         })
