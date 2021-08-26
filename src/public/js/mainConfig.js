@@ -14,6 +14,10 @@ function nineScrollLeft() {
   });
 }
 
+function resizeNineScrollLeft() {
+  $(".left").getNiceScroll().resize();
+}
+
 function nineScrollRight(divId) {
   $(`.right .chat[data-chat = ${divId}]`).niceScroll({
     smoothscroll: true,
@@ -198,7 +202,7 @@ $(document).ready(function() {
   // Bật tắt popup notification
   configNotification();
 
-  // Cấu hình thanh cuộn
+  // Cấu hình thanh cuộn bên trái
   nineScrollLeft();
 
 
