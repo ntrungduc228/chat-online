@@ -4,6 +4,12 @@ const multer = require('multer');
 const app = require('../config/app.config');
 const {transErrors, transSuccess} = require("./../../lang/vi");
 const fsExtra = require('fs-extra');
+const ejs = require('ejs');
+const { lastItemOfArray, convertTimestampToHumanTime, bufferToBase64 } = require('../helpers/client');
+const { promisify } = require("util");
+
+// Make ejs function renderFile available with async await
+const renderFile = promisify(ejs.renderFile).bind(ejs);
 
 // handle image
 let storageImageChat = multer.diskStorage({
@@ -146,6 +152,39 @@ class MessageController {
         });
     }
     
+    async readMoreAllChat(req, res, next) {
+        try{
+            // get skip number from query param
+            let skipPersonal = +(req.query.skipPersonal); // convert string to number
+            let skipGroup = +(req.query.skipGroup); // convert string to number
+
+            // get new notifications
+            let newAllConversations = await message.readMoreAllChat(req.user._id, skipPersonal, skipGroup);
+            
+            let dataToRender = {
+                newAllConversations,
+                lastItemOfArray,
+                convertTimestampToHumanTime,
+                bufferToBase64,
+                user: req.user,
+            };
+
+            let leftSideData = await renderFile("src/views/main/components/utils/_leftSide.ejs", dataToRender);
+            let rightSideData = await renderFile("src/views/main/components/utils/_rightSide.ejs", dataToRender);
+            let imageModalData = await renderFile("src/views/main/components/utils/_imageModal.ejs", dataToRender);
+            let attachmentModalData = await renderFile("src/views/main/components/utils/_attachmentModal.ejs", dataToRender);
+
+            res.status(200).send({
+                leftSideData,
+                rightSideData,
+                imageModalData,
+                attachmentModalData
+            });
+        }
+        catch(error){
+            res.status(500).send(error);
+        }
+    }
 }
 
 module.exports = new MessageController();
