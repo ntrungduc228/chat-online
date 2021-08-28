@@ -195,6 +195,42 @@ function bufferToBase64(buffer) {
   return btoa( new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), ''));
 }
 
+// Zoom hình ảnh
+function zoomImageChat() {
+  $("show-image-chat").unbind("click").on("click", function() {
+    $("#img-chat-modal").css("display", "block");
+    $("#img-chat-modal-content").attr("src", $(this)[0].src);
+
+    $("#img-chat-modal").on("click", function() {
+      $(this).css("display", "none");
+    });
+  });
+}
+
+// Click trò chuyện với user
+function userTalk() {
+  $(".user-talk").unbind("click").on("click", function() {
+    let dataChat = $(this).data("uid");
+    $("ul.people").find(`a[href="#uid_${dataChat}"]`).click();
+    $(this).closest("div.modal").modal("hide");
+  });
+}
+
+// Kiểm tra người dùng có bạn hay chưa?
+function notYetConversations() {
+  if(!$("ul.people").find("a").length) {
+    Swal.fire({
+      title: `Bạn chưa có bạn bè? Hãy tìm kiếm bạn bè để trò chuyện!`,
+      type: "info",
+      showCancelButton: false,
+      confirmButtonColor: "#2ECC71",
+      confirmButtonText: "Xác nhận",
+    }).then((result) => {
+     $("#contactsModal").modal("show");
+    });
+  }
+}
+
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();
@@ -229,7 +265,9 @@ $(document).ready(function() {
   changeScreenChat();
 
   // Click vào phần tử đầu tiên của cuộc trò chuyện khi load trang web
-  $("ul.people").find("a")[0].click();
+  if($("ul.people").find("a").length) {
+    $("ul.people").find("a")[0].click();
+  }
 
   $("#video-chat-group").bind("click", function () {
     alertify.notify("Không khả dụng tính năng này với nhóm trò chuyện", "error", 7);
