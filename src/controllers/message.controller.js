@@ -185,6 +185,36 @@ class MessageController {
             res.status(500).send(error);
         }
     }
+
+    async readMore(req, res, next) {
+        try{
+            // get skip number from query param
+            let skipMessage = +(req.query.skipMessage); // convert string to number
+            let targetId = req.query.targetId;
+            let chatInGroup = (req.query.chatInGroup === "true"); 
+            
+            // get new notifications
+            let newMessages = await message.readMore(req.user._id, skipMessage, targetId, chatInGroup);
+            let dataToRender = {
+                newMessages,
+                bufferToBase64,
+                user: req.user,
+            };
+
+            let rightSideData = await renderFile("src/views/main/components/readMoreMessages/_rightSide.ejs", dataToRender);
+            let imageModalData = await renderFile("src/views/main/components/readMoreMessages/_imageModal.ejs", dataToRender);
+            let attachmentModalData = await renderFile("src/views/main/components/readMoreMessages/_attachmentModal.ejs", dataToRender);
+
+            res.status(200).send({
+                rightSideData,
+                imageModalData,
+                attachmentModalData
+            });
+        }
+        catch(error){
+            res.status(500).send(error);
+        }
+    }
 }
 
 module.exports = new MessageController();

@@ -83,6 +83,8 @@ function routes(app){
     app.post('/message/add-new-image', authController.checkLoggedIn, messageController.addNewImage);
     app.post('/message/add-new-attachment', authController.checkLoggedIn, messageController.addNewAttachment);
     app.get('/message/read-more-all-chat', authController.checkLoggedIn, messageController.readMoreAllChat);
+    app.get('/message/read-more', authController.checkLoggedIn, messageController.readMore);
+
 
     app.post("/group-chat/add-new", authController.checkLoggedIn, groupChatValid.addNewGroup, groupChatController.addNewGroup);
 }
